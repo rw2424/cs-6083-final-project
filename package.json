@@ -1,0 +1,38 @@
+{
+  "name": "cookzilla",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/material": "^5.10.16",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/mysql": "^2.15.21",
+    "@types/node": "18.11.10",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "axios": "^1.2.0",
+    "bcryptjs": "^2.4.3",
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.0.5",
+    "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "next": "13.0.5",
+    "react": "18.2.0",
+    "react-cookie": "^4.1.1",
+    "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
+    "typescript": "4.9.3",
+    "util": "^0.12.5",
+    "yup": "^0.32.11"
+  }
+}

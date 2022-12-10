@@ -1,0 +1,31 @@
+import * as mysql from 'mysql2';
+import * as util from 'util';
+
+let query: any;
+let poolInitialized = false;
+
+const PersonTable = 'Person';
+const RecipeTable = 'Recipe';
+
+const initDBConnection = () => {
+  const poolWithoutPromise = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.dbHost,
+    user: process.env.dbUser,
+    password: process.env.dbPassword,
+    database: process.env.dbName,
+  });
+  query = util.promisify(poolWithoutPromise.query).bind(poolWithoutPromise);
+  poolInitialized = true;
+};
+
+const getDBObject = () => {
+  if (!poolInitialized) {
+    throw Error('DB connection not established yet');
+  }
+  return {
+    query,
+  };
+};
+
+export default { initDBConnection, getDBObject, PersonTable, RecipeTable };
