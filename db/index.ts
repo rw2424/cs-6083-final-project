@@ -6,6 +6,11 @@ let poolInitialized = false;
 
 const PersonTable = 'Person';
 const RecipeTable = 'Recipe';
+const UnitTable = 'Unit';
+const RecipeIngredientTable = 'RecipeIngredient';
+const RecipePictureTable = 'RecipePicture';
+const StepTable = 'Step';
+const IngredientTable = 'Ingredient';
 
 const initDBConnection = () => {
   const poolWithoutPromise = mysql.createPool({
@@ -28,4 +33,14 @@ const getDBObject = () => {
   };
 };
 
-export default { initDBConnection, getDBObject, PersonTable, RecipeTable };
+export default {
+  initDBConnection,
+  getDBObject,
+  PersonTable,
+  RecipeTable,
+  UnitTable,
+  RecipeIngredientTable,
+  RecipePictureTable,
+  StepTable,
+  IngredientTable,
+};
