@@ -7,9 +7,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    if (req.method == 'GET') {
-      const { id } = req.query;
-      const recipe = await RecipeService.getRecipeById(id);
+    if (req.method == 'POST') {
+      const { ids } = req.body;
+      const recipe = await RecipeService.getRecipeByIds(ids);
       res.status(200).json(recipe);
     } else {
       res.status(405).json({});

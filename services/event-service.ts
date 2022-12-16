@@ -2,7 +2,6 @@ import db from '../db';
 import InternalServerError from '../errors/internal-server-error';
 import MainError from '../errors/main';
 
-
 async function postEvent(
   eName: string,
   eDesc: string,
@@ -15,14 +14,10 @@ async function postEvent(
     db.initDBConnection();
     const res = await db
       .getDBObject()
-      .query('INSERT into ?? (eName, eDesc, eDate, gName, gCreator) values (?,?,?,?,?)', [
-        db.EventTable,
-        eName,
-        eDesc,
-        eDate,
-        gName,
-        gCreator,
-      ]);
+      .query(
+        'INSERT into ?? (eName, eDesc, eDate, gName, gCreator) values (?,?,?,?,?)',
+        [db.EventTable, eName, eDesc, eDate, gName, gCreator]
+      );
     const eventId = res.insertId;
     for (const pictureUrl of pictureUrls) {
       await db
@@ -46,23 +41,28 @@ async function postEvent(
   }
 }
 
-async function getEvents() {
+async function getEvents(gName: string, gCreator: string) {
   try {
     db.initDBConnection();
     let eventInfos = Array();
     const events = await db
       .getDBObject()
-      .query('SELECT * FROM ??', [db.EventTable]);
+      .query('SELECT * FROM ?? WHERE gName=? AND gCreator=?', [
+        db.EventTable,
+        gName,
+        gCreator,
+      ]);
     for (const event of events) {
       const pictures = await db
         .getDBObject()
         .query('SELECT * FROM ?? WHERE eID=?', [
-          db.EventTable,
+          db.EventPictureTable,
           event.eID,
         ]);
       eventInfos.push({
         eID: event.eID,
         eName: event.eName,
+        picture: pictures.map((p) => p.pictureURL),
       });
     }
     return eventInfos;
@@ -83,7 +83,7 @@ async function getEventById(id: number) {
       .getDBObject()
       .query('SELECT * FROM ?? WHERE eID=?', [db.EventTable, id]);
     return {
-      event: event
+      event: event,
     };
   } catch (e) {
     console.error('unable to get event by id');

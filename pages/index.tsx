@@ -25,7 +25,7 @@ export default function Index() {
   }, []);
 
   const router = useRouter();
-  const { q } = router.query;
+  const { title, tag, avgStars } = router.query;
 
   return (
     <>
@@ -53,7 +53,12 @@ export default function Index() {
         <Container maxWidth="md">
           <Grid container spacing={4}>
             {recipes
-              .filter((recipe) => !q || recipe.title.includes(q))
+              .filter(
+                (recipe) =>
+                  (!title || recipe.title.includes(title)) &&
+                  (!tag || recipe.tags.includes(tag)) &&
+                  (!avgStars || recipe.avgStars >= avgStars)
+              )
               .map((recipe) => (
                 <Grid item key={recipe.recipeId} xs={12} sm={6} md={4}>
                   <Card
@@ -71,6 +76,12 @@ export default function Index() {
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {recipe.title}
+                      </Typography>
+                      <Typography gutterBottom>
+                        {`Tag: ${recipe.tags}`}
+                      </Typography>
+                      <Typography gutterBottom>
+                        {`Average Stars: ${recipe.avgStars}`}
                       </Typography>
                     </CardContent>
                     <CardActions>

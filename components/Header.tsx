@@ -14,7 +14,13 @@ import {
 } from '@mui/material';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import { deepPurple } from '@mui/material/colors';
-import { Logout, PostAdd } from '@mui/icons-material';
+import {
+  Logout,
+  PostAdd,
+  Visibility,
+  ManageAccounts,
+  Groups,
+} from '@mui/icons-material';
 import { useCookies } from 'react-cookie';
 import Nextlink from 'next/link';
 import { useState, useEffect } from 'react';
@@ -77,19 +83,52 @@ export default function Header() {
     <AppBar position="relative">
       <Toolbar>
         <LunchDiningIcon sx={{ mr: 2 }} />
-        <Typography variant="h6" noWrap>
+        <Button
+          color="secondary"
+          onClick={() => {
+            router.push('/');
+          }}
+        >
           Cookzilla
-        </Typography>
+        </Button>
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder="Search…"
+            placeholder="Search by title"
             inputProps={{ 'aria-label': 'search' }}
             onKeyDown={(e) => {
               if (e.keyCode == 13) {
-                router.push(`/?q=${e.currentTarget.value}`);
+                router.push(`/?title=${e.currentTarget.value}`);
+              }
+            }}
+          />
+        </Search>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search by tag"
+            inputProps={{ 'aria-label': 'search' }}
+            onKeyDown={(e) => {
+              if (e.keyCode == 13) {
+                router.push(`/?tag=${e.currentTarget.value}`);
+              }
+            }}
+          />
+        </Search>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search by average star"
+            inputProps={{ 'aria-label': 'search' }}
+            onKeyDown={(e) => {
+              if (e.keyCode == 13) {
+                router.push(`/?avgStars=${e.currentTarget.value}`);
               }
             }}
           />
@@ -140,6 +179,36 @@ export default function Header() {
                   <PostAdd fontSize="small" />
                 </ListItemIcon>
                 Post a Recipe
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  router.push('/browser-history');
+                }}
+              >
+                <ListItemIcon>
+                  <Visibility fontSize="small" />
+                </ListItemIcon>
+                Browser History
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  router.push('/preference');
+                }}
+              >
+                <ListItemIcon>
+                  <ManageAccounts fontSize="small" />
+                </ListItemIcon>
+                Preference
+              </MenuItem>
+              <MenuItem
+                onClick={(e) => {
+                  router.push('/group');
+                }}
+              >
+                <ListItemIcon>
+                  <Groups fontSize="small" />
+                </ListItemIcon>
+                Groups
               </MenuItem>
               <MenuItem
                 onClick={async (e) => {

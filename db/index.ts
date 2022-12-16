@@ -14,8 +14,17 @@ const IngredientTable = 'Ingredient';
 const EventTable = 'Event';
 const EventPictureTable = 'EventPicture';
 const RSVP = 'RSVP';
+const ReviewTable = 'Review';
+const ReviewPictureTable = 'ReviewPicture';
+const RecipeTagTable = 'RecipeTag';
+const UnitConversionTable = 'UnitConversion';
+const GroupTable = 'Group';
+const GroupMembershipTable = 'GroupMembership';
 
 const initDBConnection = () => {
+  if (poolInitialized) {
+    return;
+  }
   const poolWithoutPromise = mysql.createPool({
     connectionLimit: 10,
     host: process.env.dbHost,
@@ -49,4 +58,10 @@ export default {
   EventTable,
   EventPictureTable,
   RSVP,
+  ReviewTable,
+  ReviewPictureTable,
+  RecipeTagTable,
+  UnitConversionTable,
+  GroupTable,
+  GroupMembershipTable,
 };

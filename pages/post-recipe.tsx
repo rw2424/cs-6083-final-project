@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Avatar,
   Box,
   Button,
@@ -37,6 +38,7 @@ export default function PostRecipe() {
     initialValues: {
       title: '',
       numServings: 0,
+      tags: '',
     },
     onSubmit: () => {
       axios
@@ -47,6 +49,7 @@ export default function PostRecipe() {
           ingredients: ingredients,
           pictureUrls: pictureUrls,
           stepDescriptions: stepDescriptions,
+          tags: formik.values.tags.split(','),
         })
         .then((res) => {
           router.push('/');
@@ -116,6 +119,15 @@ export default function PostRecipe() {
                 <StepForm
                   stepDescriptions={stepDescriptions}
                   setStepDescriptions={setStepDescriptions}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Tags (seperated by ',')"
+                  name="tags"
+                  fullWidth
+                  value={formik.values.tags}
+                  onChange={formik.handleChange}
                 />
               </Grid>
             </Grid>

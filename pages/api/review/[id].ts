@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import RecipeService from '../../../services/recipe-service';
+import ReviewService from '../../../services/review-service';
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,8 +9,8 @@ export default async function handler(
   try {
     if (req.method == 'GET') {
       const { id } = req.query;
-      const recipe = await RecipeService.getRecipeById(id);
-      res.status(200).json(recipe);
+      const review = await ReviewService.getReviewByRecipeId(id);
+      res.status(200).json(review);
     } else {
       res.status(405).json({});
     }

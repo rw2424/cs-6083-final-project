@@ -15,6 +15,7 @@ export default async function handler(
         ingredients,
         pictureUrls,
         stepDescriptions,
+        tags,
       } = req.body;
       const recipe = await RecipeService.postRecipe(
         title,
@@ -22,7 +23,8 @@ export default async function handler(
         postedBy,
         ingredients,
         pictureUrls,
-        stepDescriptions
+        stepDescriptions,
+        tags
       );
       res.status(200).json(recipe);
     } else if (req.method == 'GET') {

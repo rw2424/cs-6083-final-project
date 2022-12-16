@@ -10,6 +10,15 @@ export default async function handler(
     if (req.method == 'GET') {
       const units = await UnitService.getUnits();
       res.status(200).json(units);
+    }
+    if (req.method == 'POST') {
+      const { srcUnit, dstUnit, srcAmount } = req.body;
+      const dstAmount = await UnitService.convertUnit(
+        srcUnit,
+        dstUnit,
+        srcAmount
+      );
+      res.status(200).json(dstAmount);
     } else {
       res.status(405).json({});
     }
