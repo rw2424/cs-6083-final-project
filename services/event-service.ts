@@ -2,21 +2,13 @@ import db from '../db';
 import InternalServerError from '../errors/internal-server-error';
 import MainError from '../errors/main';
 
-export type Person = {
-  userName: string;
-  password: string;
-  fName: string;
-  lName: string;
-  email: string;
-  profile: string;
-};
 
 async function postEvent(
   eName: string,
   eDesc: string,
   eDate: string,
   gName: string,
-  gCreator: Person,
+  gCreator: string,
   pictureUrls: string[]
 ) {
   try {
