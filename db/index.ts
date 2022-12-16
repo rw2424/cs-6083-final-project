@@ -11,6 +11,8 @@ const RecipeIngredientTable = 'RecipeIngredient';
 const RecipePictureTable = 'RecipePicture';
 const StepTable = 'Step';
 const IngredientTable = 'Ingredient';
+const EventTable = 'Event';
+const EventPictureTable = 'EventPicture';
 
 const initDBConnection = () => {
   const poolWithoutPromise = mysql.createPool({
@@ -43,4 +45,6 @@ export default {
   RecipePictureTable,
   StepTable,
   IngredientTable,
+  EventTable,
+  EventPictureTable,
 };
