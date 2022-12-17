@@ -27,9 +27,15 @@ Cookzilla is a cooking and recipe website.
    3. Recipe List
 <img height="600" alt="recipe-list" src="https://user-images.githubusercontent.com/90872708/208225071-39ae9ec0-730b-4600-927d-9182350f67b3.png">
 
-   4. For our search by average star, whatever number put, the rating must be equal or higher to be shown
-   5. Our search bar for 'search for title', it is case-sensitive
-   6. Our search bar for 'search by tag', it is also case-sensitive
+   4. Recipe Info
+<img height="600" alt="recipe-list" src="https://user-images.githubusercontent.com/90872708/208225350-88dffbbd-4179-46fe-96d5-4a57a9400053.png">
+
+   5. Post Recipe
+<img height="600" alt="recipe-list" src="https://user-images.githubusercontent.com/90872708/208225358-42d63b8b-064e-457f-bb9c-ebae8743ec08.png">
+
+   6. For our search by average star, whatever number put, the rating must be equal or higher to be shown
+   7. Our search bar for 'search for title', it is case-sensitive
+   8. Our search bar for 'search by tag', it is also case-sensitive
 # Extra features we implemented
    1. Created a browsing history for each user to show their recently viewed recipes
 <img width="600" alt="Screen Shot 2022-12-16 at 11 25 48 PM" src="https://user-images.githubusercontent.com/79119594/208224745-50fe2dde-0511-4d68-b96e-1f5ca36c5309.png">
