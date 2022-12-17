@@ -23,7 +23,8 @@ Cookzilla is a cooking and recipe website.
    3. Our search bar for 'search by tag', it is also case-sensitive
 # Extra features we implemented
    1. Created a browsing history for each user to show their recently viewed recipes
-      -insert pic-
+<img width="1440" alt="Screen Shot 2022-12-16 at 11 25 48 PM" src="https://user-images.githubusercontent.com/79119594/208224745-50fe2dde-0511-4d68-b96e-1f5ca36c5309.png">
+
       
    2. Allows the user to post a review
          -insert pic-
