@@ -17,7 +17,6 @@ export default async function handler(
         stepDescriptions,
         tags,
       } = req.body;
-      console.log(req.body);
       const recipe = await RecipeService.postRecipe(
         title,
         numServings,

@@ -78,10 +78,12 @@ export default function Index() {
                         {recipe.title}
                       </Typography>
                       <Typography gutterBottom>
-                        {`Tag: ${recipe.tags}`}
+                        <strong>Tag: </strong>
+                        {recipe.tags == [] ? recipe.tags.join(', ') : 'None'}
                       </Typography>
                       <Typography gutterBottom>
-                        {`Average Stars: ${recipe.avgStars}`}
+                        <strong>Average Stars: </strong>
+                        {recipe.avgStars}
                       </Typography>
                     </CardContent>
                     <CardActions>
