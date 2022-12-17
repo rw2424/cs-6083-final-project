@@ -55,10 +55,12 @@ Cookzilla is a cooking and recipe website.
    <img width="600" alt="Screen Shot 2022-12-16 at 11 28 46 PM" src="https://user-images.githubusercontent.com/79119594/208224848-e936a56b-3472-4202-ba0e-a1d27f1089ea.png">
 
    3. Allows for a user to post an event for a group that the user belongs to
-         -insert pic-
+<img width="436" alt="Screen Shot 2022-12-16 at 11 49 23 PM" src="https://user-images.githubusercontent.com/79119594/208225654-1d9be221-2562-4eff-bf17-e78b735faefd.png">
+
          
    4. Allows for users within a group to RSVP to a event
-         -insert pic-
+<img width="500" alt="Screen Shot 2022-12-16 at 11 49 00 PM" src="https://user-images.githubusercontent.com/79119594/208225646-044ab7b8-4358-455c-a2ad-545040050b48.png">
+
          
    5. Convert the units in a recipe (from ounce to pound, pound to ounce, etc)
       -insert pic-   
