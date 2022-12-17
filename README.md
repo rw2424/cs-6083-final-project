@@ -16,6 +16,11 @@ Cookzilla is a cooking and recipe website.
    ```shell
    npm run dev
    ```
+   
+# Base features:
+   1. For our search by average star, whatever number put, the rating must be equal or higher to be shown
+   2. Our search bar for 'search for title', it is case-sensitive
+   3. Our search bar for 'search by tag', it is also case-sensitive
 # Extra features we implemented
    1. Created a browsing history for each user to show their recently viewed recipes
       -insert pic-
@@ -34,3 +39,4 @@ Cookzilla is a cooking and recipe website.
       
    6. Allows each user to have a preferred unit under Preference
       -insert pic-
+      
