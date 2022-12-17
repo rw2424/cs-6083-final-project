@@ -52,6 +52,7 @@ export default function PostRecipe() {
         toast.error(
           'At least one entry of each field must be filled in, please re-enter!'
         );
+        return;
       }
       axios
         .post('/api/recipe', {
