@@ -84,7 +84,9 @@ export default function Header() {
       <Toolbar>
         <LunchDiningIcon sx={{ mr: 2 }} />
         <Button
-          color="secondary"
+          sx={{
+            color: 'white',
+          }}
           onClick={() => {
             router.push('/');
           }}

@@ -79,7 +79,7 @@ export default function Index() {
                       </Typography>
                       <Typography gutterBottom>
                         <strong>Tag: </strong>
-                        {recipe.tags == [] ? recipe.tags.join(', ') : 'None'}
+                        {recipe.tags == [] ? 'None' : recipe.tags.join(', ')}
                       </Typography>
                       <Typography gutterBottom>
                         <strong>Average Stars: </strong>
