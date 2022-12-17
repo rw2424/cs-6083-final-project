@@ -21,54 +21,45 @@ import IngredientForm from '../components/forms/IngredientForm';
 import PictureForm from '../components/forms/PictureForm';
 import StepForm from '../components/forms/StepForm';
 
-export default function PostRecipe() {
+export default function PostEvent() {
   const router = useRouter();
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const [user, setUser] = useState(null);
+
+  const { gName, gCreator } = router.query;
 
   useEffect(() => {
     setUser(cookies.user);
   }, [cookies]);
 
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [pictureUrls, setPictureUrls] = useState<string[]>([]);
-  const [stepDescriptions, setStepDescriptions] = useState<string[]>([]);
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      numServings: 0,
-      tags: '',
+      name: '',
+      description: '',
+      date: '2022-12-16T10:10',
     },
     onSubmit: () => {
-      if (
-        formik.values.title == '' ||
-        formik.values.numServings == 0 ||
-        formik.values.tags == '' ||
-        ingredients == [] ||
-        pictureUrls == [] ||
-        stepDescriptions == []
-      ) {
-        toast.error(
-          'At least one entry of each field must be filled in, please re-enter!'
-        );
-      }
+      console.log(
+        formik.values.name,
+        formik.values.description,
+        formik.values.date
+      );
       axios
-        .post('/api/recipe', {
-          title: formik.values.title,
-          numServings: formik.values.numServings,
-          postedBy: user?.userName,
-          ingredients: ingredients,
+        .post('/api/event', {
+          eName: formik.values.name,
+          eDesc: formik.values.description,
+          eDate: formik.values.date,
+          gName: gName,
+          gCreator: gCreator,
           pictureUrls: pictureUrls,
-          stepDescriptions: stepDescriptions,
-          tags: formik.values.tags.split(','),
         })
         .then((res) => {
-          router.push('/');
+          router.push(`/event?gName=${gName}&gCreator=${gCreator}`);
         })
         .catch((error) => {
-          console.log(error);
-          toast.error('Failed to post a recipe');
+          toast.error('Failed to post a event');
         });
     },
   });
@@ -85,7 +76,7 @@ export default function PostRecipe() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Post a Recipe
+            Post a Event
           </Typography>
           <Box
             component="form"
@@ -96,8 +87,8 @@ export default function PostRecipe() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  label="Title"
-                  name="title"
+                  label="Name"
+                  name="name"
                   fullWidth
                   value={formik.values.title}
                   onChange={formik.handleChange}
@@ -105,38 +96,30 @@ export default function PostRecipe() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label="Number of Servings"
-                  name="numServings"
+                  label="Description"
+                  name="description"
                   fullWidth
                   value={formik.values.numServings}
                   onChange={formik.handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
-                <IngredientForm
-                  ingredients={ingredients}
-                  setIngredients={setIngredients}
+                <TextField
+                  label="Date"
+                  type="datetime-local"
+                  name="date"
+                  value={formik.values.date}
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  onChange={formik.handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <PictureForm
                   pictureUrls={pictureUrls}
                   setPictureUrls={setPictureUrls}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <StepForm
-                  stepDescriptions={stepDescriptions}
-                  setStepDescriptions={setStepDescriptions}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Tags (seperated by ',')"
-                  name="tags"
-                  fullWidth
-                  value={formik.values.tags}
-                  onChange={formik.handleChange}
                 />
               </Grid>
             </Grid>

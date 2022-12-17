@@ -14,6 +14,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Card,
+  CardContent,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useCookies } from 'react-cookie';
@@ -56,8 +58,8 @@ export default function Recipe() {
   useEffect(() => {
     if (router.isReady) {
       axios.get(`/api/recipe/${id}`).then((res) => {
-        let { recipe, ingredients, pictures, steps, tags } = res.data;
-        pictures = pictures.map((picture) => picture.pictureURL);
+        let { recipe, ingredients, pictureUrls, steps, tags } = res.data;
+        let pictures = pictureUrls;
         steps = steps.map((step) => step.sDesc);
         setRecipeInfo({
           title: recipe[0].title,
@@ -88,21 +90,6 @@ export default function Recipe() {
               setCurAmounts(res.data);
             });
           setCurAmounts(ingredients.map(() => ''));
-          // ingredients.map((ingredient, index) => {
-          //   axios
-          //     .post('/api/unit', {
-          //       srcUnit: ingredient.unitName,
-          //       dstUnit: preferredUnit,
-          //       srcAmount: ingredient.amount,
-          //     })
-          //     .then((res) => {
-          //       setCurAmounts(
-          //         curAmounts?.map((curAmount, idx) =>
-          //           index == idx ? res.data.dstAmount : curAmount
-          //         )
-          //       );
-          //     });
-          // });
         } else {
           setCurUnits(ingredients.map((ingredient) => ingredient.unitName));
           setCurAmounts(ingredients.map((ingredient) => ingredient.amount));
@@ -152,11 +139,17 @@ export default function Recipe() {
       reviewDescription: '',
       reviewStars: 0,
     },
-    // validationSchema: yup.object({
-    //   username: yup.string().required('Username is required'),
-    //   password: yup.string().required('Password is required'),
-    // }),
     onSubmit: () => {
+      if (
+        formik.values.reviewTitle == '' ||
+        formik.values.reviewDescription == '' ||
+        pictureUrls == []
+      ) {
+        toast.error(
+          'All review information must be filled in, please re-enter!'
+        );
+        return;
+      }
       axios
         .post('/api/review', {
           userName: user?.userName,
@@ -171,7 +164,9 @@ export default function Recipe() {
         })
         .catch((error) => {
           console.log(error);
-          toast.error(error.message);
+          toast.error(
+            'Failed to post the review, you may have already posted it!'
+          );
         });
     },
   });
@@ -198,87 +193,121 @@ export default function Recipe() {
           <Typography variant="subtitle1">
             Tags: {recipeInfo.tags.join(' ')}
           </Typography>
-          <Typography variant="h4">Images</Typography>
-          <ImageList sx={{ width: 500 }} cols={3} rowHeight={164}>
-            {recipeInfo.pictureUrls.map((pictureUrl) => (
-              <ImageListItem key={pictureUrl}>
-                <img
-                  src={`${pictureUrl}?w=164&h=164&fit=crop&auto=format`}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-          <Typography variant="h4">Ingredients</Typography>
-          {recipeInfo.ingredients.map((ingredient, index) => (
-            <>
-              <Typography variant="h5">{`Ingredient ${index + 1}`}</Typography>
-              <Typography>{`Name: ${ingredient.iName}`}</Typography>
-              <Typography>{`Unit: ${curUnits[index]}`}</Typography>
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Unit</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    // id="demo-simple-select"
-                    value={curUnits[index]}
-                    // label="Age"
-                    onChange={(e) => {
-                      e.target.value;
-                      setCurUnits(
-                        curUnits.map((curUnit, idx) =>
-                          index == idx ? e.target.value : curUnit
-                        )
-                      );
-                      axios
-                        .post('/api/unit', {
-                          srcUnit: iniUnits[index],
-                          dstUnit: e.target.value,
-                          srcAmount: iniAmounts[index],
-                        })
-                        .then((res) => {
-                          setCurAmounts(
-                            curAmounts.map((curAmount, idx) =>
-                              index == idx ? res.data.dstAmount : curAmount
+          <Card sx={{ minWidth: 400 }} variant="outlined">
+            <CardContent>
+              <Typography
+                sx={{ fontSize: 20 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                Images
+              </Typography>
+              {recipeInfo.pictureUrls.map((pictureUrl) => (
+                <img src={`${pictureUrl}`} loading="lazy" width="400px" />
+              ))}
+            </CardContent>
+          </Card>
+          <br />
+          <Card sx={{ minWidth: 600 }} variant="outlined">
+            <CardContent>
+              <Typography
+                sx={{ fontSize: 20 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                Ingredients
+              </Typography>
+              {recipeInfo.ingredients.map((ingredient, index) => (
+                <Card sx={{ minWidth: 300, mb: 1 }} variant="outlined">
+                  <Typography>{`Ingredient ${index + 1}`}</Typography>
+                  <Typography>{`Name: ${ingredient.iName}`}</Typography>
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Unit
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        value={curUnits[index]}
+                        onChange={(e) => {
+                          e.target.value;
+                          setCurUnits(
+                            curUnits.map((curUnit, idx) =>
+                              index == idx ? e.target.value : curUnit
                             )
                           );
-                        });
-                    }}
-                  >
-                    {units.map((unit) => (
-                      <MenuItem value={unit}>{unit}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-              <Typography>{`Amount: ${curAmounts[index]}`}</Typography>
-            </>
-          ))}
-          <Typography variant="h4">Steps</Typography>
-          {recipeInfo.stepDescriptions.map((stepDescription, index) => (
-            <>
-              <Typography>{`Step ${index + 1}: ${stepDescription}`}</Typography>
-            </>
-          ))}
-          <Typography variant="h4">Reviews</Typography>
-          {reviewInfo?.map((rev, index) => (
-            <>
-              <Typography variant="h5">{`Review ${index + 1}`}</Typography>
-              <Typography>{`Title: ${rev.title}`}</Typography>
-              <Typography>{`User Name: ${rev.userName}`}</Typography>
-              <Typography>{`Description: ${rev.description}`}</Typography>
-              <Typography>{`Stars: ${rev.stars}`}</Typography>
-              {rev.pictureUrls.map((pictureUrl) => (
-                <ImageListItem key={pictureUrl}>
-                  <img
-                    src={`${pictureUrl}?w=164&h=164&fit=crop&auto=format`}
-                    loading="lazy"
-                  />
-                </ImageListItem>
+                          axios
+                            .post('/api/unit', {
+                              srcUnit: iniUnits[index],
+                              dstUnit: e.target.value,
+                              srcAmount: iniAmounts[index],
+                            })
+                            .then((res) => {
+                              setCurAmounts(
+                                curAmounts.map((curAmount, idx) =>
+                                  index == idx ? res.data.dstAmount : curAmount
+                                )
+                              );
+                            });
+                        }}
+                      >
+                        {units.map((unit) => (
+                          <MenuItem value={unit}>{unit}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Typography>{`Amount: ${curAmounts[index]}`}</Typography>
+                </Card>
               ))}
-            </>
-          ))}
-
+            </CardContent>
+          </Card>
+          <br />
+          <Card sx={{ minWidth: 600 }} variant="outlined">
+            <CardContent>
+              <Typography
+                sx={{ fontSize: 20 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                Steps
+              </Typography>
+              {recipeInfo.stepDescriptions.map((stepDescription, index) => (
+                <>
+                  <Typography>{`Step ${
+                    index + 1
+                  }: ${stepDescription}`}</Typography>
+                </>
+              ))}
+            </CardContent>
+          </Card>
+          <br />
+          <Card sx={{ minWidth: 400 }} variant="outlined">
+            <CardContent>
+              <Typography
+                sx={{ fontSize: 20 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                Reviews
+              </Typography>
+              {reviewInfo?.map((rev, index) => (
+                <Card sx={{ minWidth: 400 }} variant="outlined">
+                  <Typography>{`Review ${index + 1}`}</Typography>
+                  <Typography>{`Title: ${rev.title}`}</Typography>
+                  <Typography>{`User Name: ${rev.userName}`}</Typography>
+                  <Typography>{`Description: ${rev.description}`}</Typography>
+                  <Typography>{`Stars: ${rev.stars}`}</Typography>
+                  {rev.pictureUrls.map((pictureUrl) => (
+                    <ImageListItem key={pictureUrl}>
+                      <img src={`${pictureUrl}`} width="200px" />
+                    </ImageListItem>
+                  ))}
+                </Card>
+              ))}
+            </CardContent>
+          </Card>
+          <br />
           <Typography component="h1" variant="h5">
             Post a Review
           </Typography>
@@ -307,8 +336,6 @@ export default function Recipe() {
                   rows={4}
                   value={formik.values.reviewDescription}
                   onChange={formik.handleChange}
-                  // value={formik.values.profile}
-                  // onChange={formik.handleChange}
                 />
               </Grid>
               <Grid item xs={12}>

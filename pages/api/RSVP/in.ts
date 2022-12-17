@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import RSVPService from '../../../services/rsvp-service';
 
 export default async function handler(
@@ -6,19 +7,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    if (req.method == 'POST') {
-      const { userName, eID, response, gName, gCreator } = req.body;
-      const rsvp = await RSVPService.postRSVP(
-        userName,
-        eID,
-        response,
-        gName,
-        gCreator
-      );
+    if (req.method == 'GET') {
+      const { userName, eID } = req.query;
+      const rsvp = await RSVPService.inRSVP(userName, eID);
       res.status(200).json(rsvp);
-    } else if (req.method == 'GET') {
-      const rsvps = await RSVPService.getRSVP();
-      res.status(200).json(rsvps);
     } else {
       res.status(405).json({});
     }

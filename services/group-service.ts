@@ -43,9 +43,59 @@ async function joinGroup(userName: string, gName: string, gCreator: string) {
   }
 }
 
+async function leaveGroup(userName: string, gName: string, gCreator: string) {
+  try {
+    db.initDBConnection();
+    const group = await db
+      .getDBObject()
+      .query('DELETE FROM ?? WHERE memberName=? AND gName=? AND gCreator=?', [
+        db.GroupMembershipTable,
+        userName,
+        gName,
+        gCreator,
+      ]);
+    return {
+      group,
+    };
+  } catch (e) {
+    console.error('unable to join event');
+    if (!(e instanceof MainError.ExtendableError)) {
+      console.error(e);
+      throw new InternalServerError();
+    }
+    throw e;
+  }
+}
+
+async function inGroup(userName: string, gName: string, gCreator: string) {
+  try {
+    db.initDBConnection();
+    const group = await db
+      .getDBObject()
+      .query('SELECT * FROM ?? WHERE memberName=? AND gName=? AND gCreator=?', [
+        db.GroupMembershipTable,
+        userName,
+        gName,
+        gCreator,
+      ]);
+    return {
+      isIn: group.length > 0,
+    };
+  } catch (e) {
+    console.error('unable to join event');
+    if (!(e instanceof MainError.ExtendableError)) {
+      console.error(e);
+      throw new InternalServerError();
+    }
+    throw e;
+  }
+}
+
 const GroupService = {
   getGroups,
   joinGroup,
+  leaveGroup,
+  inGroup,
 };
 
 export default GroupService;

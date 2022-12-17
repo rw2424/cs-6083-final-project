@@ -62,6 +62,8 @@ async function getEvents(gName: string, gCreator: string) {
       eventInfos.push({
         eID: event.eID,
         eName: event.eName,
+        eDesc: event.eDesc,
+        eDate: event.eDate,
         picture: pictures.map((p) => p.pictureURL),
       });
     }

@@ -113,7 +113,8 @@ async function getRecipes() {
       recipeInfos.push({
         recipeId: recipe.recipeID,
         title: recipe.title,
-        pictureUrl: pictures[0].pictureURL,
+        pictureUrl: pictures[0] ? pictures[0].pictureURL : '',
+        pictureUrls: pictures.map((picture) => picture.pictureURL),
         tags: tags.map((tag) => tag.tagText),
         avgStars: avgStars[0].a,
       });
@@ -153,7 +154,8 @@ async function getRecipeById(id: number) {
     return {
       recipe: recipe,
       ingredients: ingredients,
-      pictures: pictures,
+      pictureUrl: pictures[0] ? pictures[0].pictureURL : '',
+      pictureUrls: pictures.map((picture) => picture.pictureURL),
       steps: steps,
       tags: tags,
     };
@@ -188,7 +190,8 @@ async function getRecipeByIds(ids: number[]) {
       res.push({
         recipeId: recipe.recipeID,
         title: recipe.title,
-        pictureUrl: pictures[0].pictureURL,
+        pictureUrl: pictures[0] ? pictures[0].pictureURL : '',
+        pictureUrls: pictures.map((picture) => picture.pictureURL),
       });
     }
     return res;

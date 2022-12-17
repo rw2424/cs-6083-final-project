@@ -30,7 +30,7 @@ export default function PictureForm({
           </ListItem>
         ))}
       </List>
-      <Box noValidate sx={{ mt: 3 }} component="form">
+      <Box sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField

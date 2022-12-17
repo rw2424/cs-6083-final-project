@@ -7,18 +7,9 @@ export default async function handler(
 ) {
   try {
     if (req.method == 'POST') {
-      const { userName, eID, response, gName, gCreator } = req.body;
-      const rsvp = await RSVPService.postRSVP(
-        userName,
-        eID,
-        response,
-        gName,
-        gCreator
-      );
+      const { userName, eID } = req.body;
+      const rsvp = await RSVPService.cancelRSVP(userName, eID);
       res.status(200).json(rsvp);
-    } else if (req.method == 'GET') {
-      const rsvps = await RSVPService.getRSVP();
-      res.status(200).json(rsvps);
     } else {
       res.status(405).json({});
     }

@@ -8,7 +8,7 @@ export default async function handler(
   try {
     if (req.method == 'POST') {
       const { userName, eID, response, gName, gCreator } = req.body;
-      const rsvp = await RSVPService.postRSVP(
+      const rsvp = await RSVPService.addRSVP(
         userName,
         eID,
         response,
