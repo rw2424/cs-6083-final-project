@@ -63,8 +63,10 @@ Cookzilla is a cooking and recipe website.
 
          
    5. Convert the units in a recipe (from ounce to pound, pound to ounce, etc)
-      -insert pic-   
+<img width="500" alt="Screen Shot 2022-12-16 at 11 50 53 PM" src="https://user-images.githubusercontent.com/79119594/208225691-ae74bc34-02f2-4be8-9057-8119cb2c863d.png">
+
       
    6. Allows each user to have a preferred unit under Preference
-      -insert pic-
-      
+
+<img width="500" alt="Screen Shot 2022-12-16 at 11 51 16 PM" src="https://user-images.githubusercontent.com/79119594/208225707-2f3993fd-ac9a-4ce0-ae3d-8222824f004c.png">
+
