@@ -214,6 +214,7 @@ export default function Header() {
                 onClick={async (e) => {
                   e.preventDefault();
                   removeCookie('user');
+                  router.push('/login');
                 }}
               >
                 <ListItemIcon>
