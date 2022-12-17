@@ -83,7 +83,7 @@ export default function Index() {
                       </Typography>
                       <Typography gutterBottom>
                         <strong>Average Stars: </strong>
-                        {recipe.avgStars}
+                        {recipe.avgStars ?? 'None'}
                       </Typography>
                     </CardContent>
                     <CardActions>
